@@ -1,0 +1,23 @@
+server:
+  port: 8761
+
+spring:
+  application:
+    name: service-registry
+  config:
+    # "optional:" lets the registry start even when the Config Server is down.
+    # Override with CONFIG_SERVER_URL, e.g. inside Docker where localhost is the container.
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}
+
+eureka:
+  client:
+    # Standalone mode: this instance *is* the registry, so it neither
+    # registers with nor fetches from another Eureka server.
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
